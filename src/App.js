@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
-import CityList from "./components/CityList";
+import Header from "./components/Header";
 import Weather from "./components/Weather";
 
 function App() {
   return (
     <div className='App'>
+      <Header />
       <Weather />
-      <CityList />
     </div>
   );
 }
