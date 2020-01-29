@@ -4,6 +4,11 @@ form {
   padding: 20px;
 }
 
+input {
+  margin: 10px;
+  padding: 5px
+}
+
 input,
 button {
   display: flex;
