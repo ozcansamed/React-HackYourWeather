@@ -8,6 +8,7 @@ export default function Weather() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [searchedCities, setSearchedCities] = useState([]);
 
   const getWeather = async searchString => {
     try {
@@ -21,10 +22,10 @@ export default function Weather() {
         throw new Error("Please insert a valid city name...");
       }
       const data = await resp.json();
+      setWeather(data);
+      setSearchedCities([data, ...searchedCities]);
       setError(false);
       setErrorMessage("");
-      setWeather(data);
-      console.log(data);
     } catch (error) {
       console.error(error);
       setWeather("");
@@ -44,11 +45,19 @@ export default function Weather() {
     setSearchText(event.target.value);
   }
 
+  function deleteCity(id) {
+    const cities = searchedCities.filter(city => city.id !== id);
+    setSearchedCities(cities);
+  }
+
+  const enableInput = () => (searchText < 1 ? true : false);
+
   return (
     <>
       <SearchBar
         onHandleFormSubmit={handleFormSubmit}
         onHandleSearchInputChange={handleSearchInputChange}
+        enableInput={enableInput}
       />
       {loading && (
         <>
@@ -59,7 +68,17 @@ export default function Weather() {
           />
         </>
       )}
-      {weather.name && <City data={weather} />}
+
+      {weather.name && (
+        <ul>
+          {searchedCities.map((data, index) => (
+            <li key={index}>
+              <City data={data} deleteCity={deleteCity} />
+            </li>
+          ))}
+        </ul>
+      )}
+
       {error && <p>Error occurred: {errorMessage}</p>}
     </>
   );
