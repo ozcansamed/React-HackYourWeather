@@ -3,7 +3,8 @@ import "./SearchBar.css";
 
 export default function SearchForm({
   onHandleFormSubmit,
-  onHandleSearchInputChange
+  onHandleSearchInputChange,
+  enableInput
 }) {
   return (
     <form onSubmit={onHandleFormSubmit}>
@@ -13,7 +14,7 @@ export default function SearchForm({
         onChange={onHandleSearchInputChange}
         placeholder='Search City...'
       />
-      <button>Search</button>
+      <button disabled={enableInput()}>Search</button>
     </form>
   );
 }
