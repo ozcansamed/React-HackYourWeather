@@ -2,32 +2,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: rgb(54, 54, 241);
 }
 
 .App {
   text-align: center;
 }
 
-.cityList {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-
-}
-
 .city {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  text-align: center;
   flex: 1 1 0;
   border: 1px solid black;
   margin: 10px auto;
   padding: 10px 40px;
-  min-width: 400px;
+  width: 350px;
 }
 
 .weather {
-  margin: 50px auto;
+  margin: 30px auto 10px auto;
 }
 
 h3 {
