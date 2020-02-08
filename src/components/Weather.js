@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import City from "./City";
 import SearchBar from "./SearchBar";
+import CityDetail from "./CityDetail";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+export const WeatherContext = createContext({});
 
 export default function Weather() {
   const [weather, setWeather] = useState([]);
@@ -53,33 +57,44 @@ export default function Weather() {
   const enableInput = () => (searchText < 1 ? true : false);
 
   return (
-    <>
-      <SearchBar
-        onHandleFormSubmit={handleFormSubmit}
-        onHandleSearchInputChange={handleSearchInputChange}
-        enableInput={enableInput}
-      />
-      {loading && (
-        <>
-          <p>Wait for it...</p>
-          <img
-            src='https://miro.medium.com/max/441/1*9EBHIOzhE1XfMYoKz1JcsQ.gif'
-            alt='loading'
+    <Router>
+      <div>
+        <WeatherContext.Provider
+          value={{ weather, setWeather, searchedCities, deleteCity }}
+        >
+          <SearchBar
+            onHandleFormSubmit={handleFormSubmit}
+            onHandleSearchInputChange={handleSearchInputChange}
+            enableInput={enableInput}
           />
-        </>
-      )}
-
-      {weather.name && (
-        <ul>
-          {searchedCities.map((data, index) => (
-            <li key={index}>
-              <City data={data} deleteCity={deleteCity} />
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {error && <p>Error occurred: {errorMessage}</p>}
-    </>
+          {loading && (
+            <>
+              <p>Wait for it...</p>
+              <img
+                src='https://miro.medium.com/max/441/1*9EBHIOzhE1XfMYoKz1JcsQ.gif'
+                alt='loading'
+              />
+            </>
+          )}
+          <Switch>
+            <Route path='/:id'>
+              <CityDetail />
+            </Route>
+            <Route path='/'>
+              {weather.name && (
+                <ul>
+                  {searchedCities.map((data, index) => (
+                    <li key={index}>
+                      <City data={data} deleteCity={deleteCity} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Route>
+          </Switch>
+          {error && <p>Error occurred: {errorMessage}</p>}
+        </WeatherContext.Provider>
+      </div>
+    </Router>
   );
 }
