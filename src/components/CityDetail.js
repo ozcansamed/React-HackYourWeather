@@ -21,7 +21,7 @@ export default function CityDetail() {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?id=${params.id}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}`
+      `https://api.openweathermap.org/data/2.5/forecast?id=${params.id}&units=metric&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}`
     )
       .then(res => {
         if (res.ok) {

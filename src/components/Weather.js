@@ -18,7 +18,7 @@ export default function Weather() {
     try {
       setLoading(true);
       const resp = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}
+        `https://api.openweathermap.org/data/2.5/weather?q=${searchString}&units=metric&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}
     `
       );
       setLoading(true);
